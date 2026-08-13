@@ -4,6 +4,8 @@
  */
 package clinic;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Student
@@ -13,6 +15,7 @@ package clinic;
 //la T significa type y K significa clave
 public interface DynamicsList <T>{
     public boolean add(T item);
+    public Iterator getAll();
     public int size();
     public boolean isEmpty();
 }
