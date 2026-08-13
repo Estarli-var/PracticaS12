@@ -8,7 +8,7 @@ package clinic;
  *
  * @author Student
  */
-public interface SequentialDynamicsList<T,K> extends DynamicsList<T,K>{
+public interface SequentialDynamicsList<T> extends DynamicsList<T>{
     public T get();
     public boolean remove();
     
