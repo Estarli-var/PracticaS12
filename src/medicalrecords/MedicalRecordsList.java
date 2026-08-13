@@ -5,13 +5,14 @@
 package medicalrecords;
 
 import clinic.SequentialDynamicsList;
+import java.util.Iterator;
 import java.util.Stack;
 
 /**
  *
  * @author Student
  */
-public class MedicalRecordsList implements SequentialDynamicsList<MedicalRecord,Integer>{
+public class MedicalRecordsList implements SequentialDynamicsList<MedicalRecord>{
   private Stack<MedicalRecord> medicalHistory;
 
     @Override
@@ -30,6 +31,11 @@ public class MedicalRecordsList implements SequentialDynamicsList<MedicalRecord,
     }
 
     @Override
+    public Iterator getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
     public int size() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -38,6 +44,8 @@ public class MedicalRecordsList implements SequentialDynamicsList<MedicalRecord,
     public boolean isEmpty() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+
   
   
 }
