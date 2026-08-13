@@ -14,37 +14,50 @@ import java.util.TreeSet;
  */
 public class AppointmentsList implements KeyDynamicsLists<Appointment,String>{
     TreeSet<Appointment> appointment;
-
+    
+    public AppointmentsList() {
+        this.appointment = new TreeSet();
+    }
+    
     @Override
-    public Appointment get(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Appointment get(String code) {
+        for (Appointment appo : appointment) {
+            if(appo.getCode().equals(code)){
+                return appo;
+            }
+        }
+        return null;
     }
 
     @Override
     public boolean remove(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Appointment appo  = this.get(id);
+        if(appo == null){
+            return false;
+        }
+        return appointment.remove(appo);
     }
 
     @Override
     public boolean add(Appointment item) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return appointment.add(item);
     }
 
     @Override
     public Iterator getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(appointment.isEmpty()){
+            return null;
+        }
+        return appointment.iterator();
     }
 
     @Override
     public int size() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return appointment.size();
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-    
+        return appointment.isEmpty();
+    } 
 }
