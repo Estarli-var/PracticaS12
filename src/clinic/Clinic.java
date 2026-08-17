@@ -48,7 +48,14 @@ public class Clinic {
     }
 
     public boolean scheduleAppointment(Appointment appointment) {
-        return false;
+          boolean status = clinic.rescheduleAppointment(appointment);
+    
+    if (status) {
+        view.showMessage("La cita se ha reagendado correctamente");
+    } else {
+        view.showError("La cita no se ha reagendado correctamente");
+    }
+        return status;
     }
 
     public Appointment findAppointment(String code) {
