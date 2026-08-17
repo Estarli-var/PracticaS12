@@ -21,6 +21,7 @@ public class PatientsList implements KeyDynamicsLists<Patient,String>{
     public Patient get(String id) {
         if(!patients.containsKey(id))
             return patients.get(id);
+        return null;
     }
 
     @Override
