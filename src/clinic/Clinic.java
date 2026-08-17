@@ -52,15 +52,26 @@ public class Clinic {
     }
 
     public Appointment findAppointment(String code) {
-        return null;
+        Appointment appo = clinic.findAppointment (code);
+        if (appo == null){
+            view.showError("No se encuentrs uns cits con el codigo");
+            view.clear();
+        }
+        view.showData (appo);
+        return appo;
     }
 
-    public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime) {
-
-        return false;
-
+   public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime) {
+    boolean status = clinic.rescheduleAppointment(code, newDate, newTime);
+    
+    if (status) {
+        view.showMessage("La cita se ha reagendado correctamente");
+    } else {
+        view.showError("La cita no se ha reagendado correctamente");
     }
-
+    
+    return status;
+}
     public boolean cancelAppointment(String code) {
 
         return false;
