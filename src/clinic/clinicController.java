@@ -36,19 +36,24 @@ public class clinicController {
     }
     
     public void addPatient(Patient patient){
-        
+        boolean status = clinic.addPatient(patient);
+        if (status) {
+            view.showMessage("Paciente agregado correctamente");
+        }else{
+            view.showError("No se pudo agregar el paciente");
+        }
     }
 
-    public void findPatient(String id){
-        
+    public Patient findPatient(String id){
+        return clinic.findPatient(id);
     }
 
     public void removePatient(String id){
-        
+        clinic.removePatient(id);
     }
 
     public Iterator<Patient> getPatients(){
-        
+        return clinic.getPatients();
     }
 
     public boolean scheduleAppointment(Appointment appointment){
