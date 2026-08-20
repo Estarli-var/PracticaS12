@@ -27,12 +27,10 @@ public class Clinic {
         this.patients = new PatientsList();
         this.appointments = new AppointmentsList();
         this.waitingRoom = new WaitingRomsList();
-
     }
 
     public boolean addPatient(Patient patient) {
         return false;
-        
     }
 
     public Patient findPatient(String id) {
@@ -48,76 +46,42 @@ public class Clinic {
     }
 
     public boolean scheduleAppointment(Appointment appointment) {
-          boolean status = clinic.rescheduleAppointment(appointment);
-    
-    if (status) {
-        view.showMessage("La cita se ha reagendado correctamente");
-    } else {
-        view.showError("La cita no se ha reagendado correctamente");
-    }
-        return status;
+        return false;
     }
 
     public Appointment findAppointment(String code) {
-        Appointment appo = clinic.findAppointment (code);
-        if (appo == null){
-            view.showError("No se encuentrs uns cits con el codigo");
-            view.clear();
-        }
-        view.showData (appo);
-        return appo;
+        return null;
     }
 
-   public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime) {
-    boolean status = clinic.rescheduleAppointment(code, newDate, newTime);
-    
-    if (status) {
-        view.showMessage("La cita se ha reagendado correctamente");
-    } else {
-        view.showError("La cita no se ha reagendado correctamente");
-    }
-    
-    return status;
-}
-    public boolean cancelAppointment(String code) {
-
+    public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime) {
         return false;
+    }
 
+    public boolean cancelAppointment(String code) {
+        return false;
     }
 
     public Iterator<Appointment> getAppointments() {
-
         return null;
-
     }
 
     public boolean checkInPatient(String patientId) {
-
         return false;
-
     }
 
     public Patient getNextPatient() {
-
         return null;
-
     }
 
     public Patient attendNextPatient() {
-
         return null;
-
     }
 
     public int getWaitingPatientCount() {
-
         return 0;
-
     }
 
     public boolean isPatientWaiting(String patientId) {
-
         return false;
-
     }
 }
