@@ -4,6 +4,7 @@
  */
 package clinic;
 
+import WaitingRoms.WaitingRomsList;
 import appointments.Appointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,15 +15,14 @@ import patients.Patient;
  *
  * @author Student
  */
-
 public class clinicController {
     private Clinic clinic;
     private iViews view;
     private static clinicController controller;
     
     public static clinicController getInstance(iViews view){
-        if (controller==null) 
-            controller=new clinicController(view);
+        if (controller == null) 
+            controller = new clinicController(view);
         return controller;
     }
     
@@ -31,25 +31,34 @@ public class clinicController {
     }
     
     private clinicController(iViews view){
-        this.clinic=new Clinic();
-        this.view=view;
+        this.clinic = new Clinic();
+        this.view = view;
     }
     
     public void addPatient(Patient patient){
         boolean status = clinic.addPatient(patient);
         if (status) {
             view.showMessage("Paciente agregado correctamente");
-        }else{
+        } else {
             view.showError("No se pudo agregar el paciente");
         }
     }
 
     public Patient findPatient(String id){
-        return clinic.findPatient(id);
+        Patient patient = clinic.findPatient(id);
+        if (patient == null) {
+            view.showError("No se encontró el paciente con la cédula/ID ingresado");
+        }
+        return patient;
     }
 
     public void removePatient(String id){
-        clinic.removePatient(id);
+        boolean status = clinic.removePatient(id);
+        if (status) {
+            view.showMessage("Paciente eliminado correctamente");
+        } else {
+            view.showError("No se pudo eliminar el paciente");
+        }
     }
 
     public Iterator<Patient> getPatients(){
@@ -60,7 +69,7 @@ public class clinicController {
         boolean status = clinic.scheduleAppointment(appointment);
         if (status) {
             view.showMessage("Cita agendada correctamente");
-        }else{
+        } else {
             view.showError("No se pudo agendar la cita");
         }
         return status;
@@ -68,49 +77,72 @@ public class clinicController {
 
     public Appointment findAppointment(String code){
         Appointment appo = clinic.findAppointment(code);
-        if(appo==null){
-            view.showError("No se encuentra citas con el codigo ingresado");
+        if (appo == null) {
+            view.showError("No se encuentra citas con el código ingresado");
+        } else {
+            view.showData(appo);
         }
-        view.clear();
         return appo;
     }
 
     public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime){
         boolean status = clinic.rescheduleAppointment(code, newDate, newTime);
-       if(status){
-           view.showMessage("La cita se ha reagendado correctamente");
-       }else{
-           view.showError("No se pudo reagendar la cita");
-       }
-       return status;
+        if (status) {
+            view.showMessage("La cita se ha reagendado correctamente");
+        } else {
+            view.showError("No se pudo reagendar la cita");
+        }
+        return status;
     }
 
-    public boolean cancelAppointment(String code){
-        return false;
+    public boolean cancelAppointment(String code) {
+        boolean status = clinic.cancelAppointment(code);
+        if (status) {
+            view.showMessage("Cita cancelada correctamente");
+        } else {
+            view.showError("No se pudo cancelar la cita");
+        }
+        return status;
     }
 
-    public Iterator<Appointment> getAppointments(){
-        return null;
+    public Iterator<Appointment> getAppointments() {
+        return clinic.getAppointments();
     }
 
-    public boolean checkInPatient(String patientId){
-        return false;
+
+    public boolean checkInPatient(String patientId) {
+        boolean status = clinic.checkInPatient(patientId);
+        if (status) {
+            view.showMessage("Paciente ingresado a la sala de espera");
+        } else {
+            view.showError("No se pudo registrar el ingreso a la sala de espera");
+        }
+        return status;
     }
 
-    public Patient getNextPatient(){
-        return null;
+    public Patient getNextPatient() {
+        Patient p = clinic.getNextPatient();
+        if (p == null) {
+            view.showError("No hay pacientes en la sala de espera");
+        }
+        return p;
     }
 
-    public Patient attendNextPatient(){
-        return null;
+    public Patient attendNextPatient() {
+        Patient p = clinic.attendNextPatient();
+        if (p != null) {
+            view.showMessage("Atendiendo paciente " + p.toString());
+        } else {
+            view.showError("No hay pacientes para atender");
+        }
+        return p;
     }
 
-    public int getWaitingPatientCount(){
-        return 0;
+    public int getWaitingPatientCount() {
+        return clinic.getWaitingPatientCount(); 
     }
 
-    public boolean isPatientWaiting(String patientId){
-        return false;
+    public boolean isPatientWaiting(String patientId) {
+        return clinic.isPatientWaiting(patientId); 
     }
-    
 }
