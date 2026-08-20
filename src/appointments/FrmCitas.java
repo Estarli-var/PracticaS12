@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package patients;
+package appointments;
 
+import patients.*;
 import clinic.clinicController;
 import clinic.iViews;
 import java.time.LocalDate;
@@ -13,14 +14,14 @@ import java.time.ZoneId;
  *
  * @author Aaron Diaz
  */
-public class FrmPaciente extends javax.swing.JFrame implements iViews<Patient>  {
+public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmPaciente.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCitas.class.getName());
     private final clinicController controller;
     /**
      * Creates new form FrmPaciente
      */
-    public FrmPaciente() {
+    public FrmCitas() {
         initComponents();
         controller = clinicController.getInstance(this);
         setLocationRelativeTo(null);
@@ -274,7 +275,7 @@ public class FrmPaciente extends javax.swing.JFrame implements iViews<Patient>  
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmPaciente().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new FrmCitas().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
