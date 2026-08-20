@@ -13,10 +13,6 @@ import java.util.Iterator;
 import patients.Patient;
 import patients.PatientsList;
 
-/**
- *
- * @author Student
- */
 public class Clinic {
 
     private PatientsList patients;
@@ -27,97 +23,95 @@ public class Clinic {
         this.patients = new PatientsList();
         this.appointments = new AppointmentsList();
         this.waitingRoom = new WaitingRomsList();
-
     }
 
     public boolean addPatient(Patient patient) {
-        return false;
-        
+        if (patient == null) return false;
+        return patients.add(patient);
     }
 
     public Patient findPatient(String id) {
-        return null;
+        if (id == null || id.trim().isEmpty()) return null;
+        return patients.get(id); 
     }
 
     public boolean removePatient(String id) {
-        return false;
+        if (id == null || id.trim().isEmpty()) return false;
+        return patients.remove(id);
     }
 
     public Iterator<Patient> getPatients() {
-        return null;
+        return patients.getAll();
     }
 
     public boolean scheduleAppointment(Appointment appointment) {
-          boolean status = clinic.rescheduleAppointment(appointment);
-    
-    if (status) {
-        view.showMessage("La cita se ha reagendado correctamente");
-    } else {
-        view.showError("La cita no se ha reagendado correctamente");
-    }
-        return status;
+        if (appointment == null) return false;
+        return appointments.add(appointment);
     }
 
     public Appointment findAppointment(String code) {
-        Appointment appo = clinic.findAppointment (code);
-        if (appo == null){
-            view.showError("No se encuentrs uns cits con el codigo");
-            view.clear();
-        }
-        view.showData (appo);
-        return appo;
-    }
-
-   public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime) {
-    boolean status = clinic.rescheduleAppointment(code, newDate, newTime);
-    
-    if (status) {
-        view.showMessage("La cita se ha reagendado correctamente");
-    } else {
-        view.showError("La cita no se ha reagendado correctamente");
-    }
-    
-    return status;
-}
-    public boolean cancelAppointment(String code) {
-
-        return false;
-
+        if (code == null || code.trim().isEmpty()) return null;
+        return appointments.get(code); 
     }
 
     public Iterator<Appointment> getAppointments() {
+        return appointments.getAll();
+    }
 
-        return null;
+    public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime) {
+        Appointment appo = findAppointment(code);
+        if (appo != null) {
+            appo.reschedule(newDate, newTime); 
+            return true;
+        }
+        return false;
+    }
 
+    public boolean cancelAppointment(String code) {
+        if (code == null || code.trim().isEmpty()) return false;
+        
+        Appointment appo = findAppointment(code);
+        if (appo != null) {
+            appo.cancel(); 
+        }
+        
+        return appointments.remove(code);
     }
 
     public boolean checkInPatient(String patientId) {
-
+        Patient p = findPatient(patientId);
+        if (p != null) {
+            return waitingRoom.add(p);
+        }
         return false;
-
     }
 
     public Patient getNextPatient() {
-
-        return null;
-
+        return waitingRoom.get(); 
     }
 
     public Patient attendNextPatient() {
-
-        return null;
-
+        Patient next = waitingRoom.get();
+        if (next != null) {
+            waitingRoom.remove();
+        }
+        return next;
     }
 
     public int getWaitingPatientCount() {
-
-        return 0;
-
+        return waitingRoom.size();
     }
 
     public boolean isPatientWaiting(String patientId) {
-
+        Iterator<Patient> it = waitingRoom.getAll();
+        if (it != null) {
+            while (it.hasNext()) {
+                Patient p = it.next();
+                if (p != null && p.getId() != null && p.getId().equals(patientId)) { 
+                    return true;
+                }
+            }
+        }
         return false;
-
     }
 }

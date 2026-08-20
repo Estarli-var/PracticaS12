@@ -13,10 +13,10 @@ import java.util.TreeSet;
  * @author Student
  */
 public class AppointmentsList implements KeyDynamicsLists<Appointment,String>{
-    TreeSet<Appointment> appointment;
+    private TreeSet<Appointment> appointment;
     
     public AppointmentsList() {
-        this.appointment = new TreeSet();
+        this.appointment = new TreeSet<>();
     }
     
     @Override
@@ -44,7 +44,7 @@ public class AppointmentsList implements KeyDynamicsLists<Appointment,String>{
     }
 
     @Override
-    public Iterator getAll() {
+    public Iterator<Appointment> getAll() {
         if(appointment.isEmpty()){
             return null;
         }
@@ -61,3 +61,6 @@ public class AppointmentsList implements KeyDynamicsLists<Appointment,String>{
         return appointment.isEmpty();
     } 
 }
+
+
+
