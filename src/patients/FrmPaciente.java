@@ -24,7 +24,6 @@ public class FrmPaciente extends javax.swing.JFrame implements iViews<Patient>  
         initComponents();
         controller = clinicController.getInstance(this);
         setLocationRelativeTo(null);
-
     }
 
     /**
@@ -114,6 +113,7 @@ public class FrmPaciente extends javax.swing.JFrame implements iViews<Patient>  
 
         btnVerRegistros.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnVerRegistros.setText("Ver registros");
+        btnVerRegistros.addActionListener(this::btnVerRegistrosActionPerformed);
 
         javax.swing.GroupLayout pnlFormularioLayout = new javax.swing.GroupLayout(pnlFormulario);
         pnlFormulario.setLayout(pnlFormularioLayout);
@@ -217,23 +217,25 @@ public class FrmPaciente extends javax.swing.JFrame implements iViews<Patient>  
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String id = txtIdentificacion.getText();
-        String nombre = txtNombre.getText();
-        String telefono = txtTelefono.getText();
-        String correo = txtCorreo.getText();
-        
-        if (id.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty() || dtcFechanacimiento.getDate() == null){
-            showError("Debe completar todos los espacios");
-            return;
-        }
-        LocalDate fechaNacimiento = dtcFechanacimiento.getDate().toInstant()
+    String id = txtIdentificacion.getText();
+    String nombre = txtNombre.getText();
+    String telefono = txtTelefono.getText();
+    String correo = txtCorreo.getText();
+    
+    if (id.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty() || dtcFechanacimiento.getDate() == null){
+        showError("Debe completar todos los espacios");
+        return;
+    } 
+    LocalDate fechaNacimiento = dtcFechanacimiento.getDate().toInstant()
         .atZone(ZoneId.systemDefault()).toLocalDate();
-
-        Patient patient = new Patient(id, nombre, fechaNacimiento, telefono,
-        correo);
-        controller.addPatient(patient);
-        showMessage("Paciente agregado correctamente.");
+    Patient patient = new Patient(id, nombre, fechaNacimiento, telefono, correo);
+    controller.addPatient(patient);
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnVerRegistrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerRegistrosActionPerformed
+        FrmVerPacientes verPacientes = new FrmVerPacientes();
+    verPacientes.setVisible(true);
+    }//GEN-LAST:event_btnVerRegistrosActionPerformed
     @Override
     public void clear() {
     

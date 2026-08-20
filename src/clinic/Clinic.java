@@ -30,43 +30,49 @@ public class Clinic {
     }
 
     public boolean addPatient(Patient patient) {
-        return false;
+        return patients.add(patient);
     }
 
     public Patient findPatient(String id) {
-        return null;
+        return patients.get(id);
     }
 
     public boolean removePatient(String id) {
-        return false;
+        return patients.remove(id);
     }
 
     public Iterator<Patient> getPatients() {
-        return null;
+        return patients.getAll();
     }
 
     public boolean scheduleAppointment(Appointment appointment) {
-        return false;
+        return appointments.add(appointment);
     }
 
     public Appointment findAppointment(String code) {
-        return null;
+        return appointments.get(code);
+    }
+    
+    public Iterator<Appointment> getAppointments() {
+    return appointments.getAll();
     }
 
     public boolean rescheduleAppointment(String code, LocalDate newDate, LocalTime newTime) {
+        Appointment appo = findAppointment(code);
+        if (appo != null) {
+            appo.setDate(newDate);
+            appo.setTime(newTime);
+            return true;
+        }
         return false;
     }
 
     public boolean cancelAppointment(String code) {
-        return false;
-    }
-
-    public Iterator<Appointment> getAppointments() {
-        return null;
+        return appointments.remove(code);
     }
 
     public boolean checkInPatient(String patientId) {
-        return false;
+        Patient p= findPatient(patientId);
     }
 
     public Patient getNextPatient() {
