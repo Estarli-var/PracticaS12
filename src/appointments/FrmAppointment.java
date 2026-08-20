@@ -3,22 +3,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package appointments;
-
-//import patients.Patient;
+import appointments.AppointmentsList;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import javax.swing.JOptionPane;
+import patients.Patient;
+import patients.PatientsList;
 /**
  *
  * @author Aaron Diaz
  */
 public class FrmAppointment extends javax.swing.JFrame{
-    
+    private AppointmentsList appointmentsList;
+    private PatientsList patientsList;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmAppointment.class.getName());
     /**
      * Creates new form FrmPaciente
      */
     public FrmAppointment() {
         initComponents();
+        appointmentsList = new AppointmentsList();
+        patientsList = new PatientsList();
     }
-
+    private void clear(){
+        txtCodigoCita.setText("");
+        txtPaciente.setText("");
+        txtCodigoCita.setText("");
+        txtHora.setText("");
+        txtMotivo.setText("");
+        dtcFechaCita.setDate(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,6 +176,7 @@ public class FrmAppointment extends javax.swing.JFrame{
 
         btnGuardarCita.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnGuardarCita.setText("Guardar");
+        btnGuardarCita.addActionListener(this::btnGuardarCitaActionPerformed);
         jPanel1.add(btnGuardarCita);
 
         btnReprogramar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -201,6 +216,42 @@ public class FrmAppointment extends javax.swing.JFrame{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCitaActionPerformed
+    String codigo = txtCodigoCita.getText();
+    String idPaciente = txtPaciente.getText();
+    String motivo = txtMotivo.getText();
+    
+        if (codigo.isEmpty() || idPaciente.isEmpty()
+            || motivo.isEmpty() || txtHora.getText().isEmpty()|| dtcFechaCita.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos");
+        }
+        Patient patient = patientsList.get(idPaciente);
+    
+        if (patient == null) {
+           JOptionPane.showMessageDialog(this, "Paciente no existe"); 
+        }
+        LocalDate fecha = dtcFechaCita.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+        LocalTime hora;
+        
+        try{
+            hora = LocalTime.parse(txtHora.getText());
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(this, "La hora debe tener formato HH:mm");
+        }
+        
+        Appointment appointment = new Appointment(
+                codigo, patient, fecha, hora, motivo
+        );
+        
+        if (appointmentsList.add(appointment)) {
+           JOptionPane.showMessageDialog(this, "Cita guardada correctamente"); 
+           
+        }else{
+            JOptionPane.showMessageDialog(this, "Ya existe una cita con esos datos");
+        }
+        
+    }//GEN-LAST:event_btnGuardarCitaActionPerformed
     /**
      * @param args the command line arguments
      */
