@@ -102,8 +102,8 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtNombre" alignment="1" min="-2" pref="195" max="-2" attributes="0"/>
                               <Component id="txtCorreo" alignment="0" min="-2" pref="212" max="-2" attributes="0"/>
+                              <Component id="txtNombre" alignment="0" min="-2" pref="195" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">

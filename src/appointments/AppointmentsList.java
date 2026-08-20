@@ -61,3 +61,4 @@ public class AppointmentsList implements KeyDynamicsLists<Appointment,String>{
         return appointment.isEmpty();
     } 
 }
+

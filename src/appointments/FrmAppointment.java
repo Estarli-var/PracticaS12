@@ -4,28 +4,19 @@
  */
 package appointments;
 
-import patients.*;
-import clinic.clinicController;
-import clinic.iViews;
-import java.time.LocalDate;
-import java.time.ZoneId;
 //import patients.Patient;
 /**
  *
  * @author Aaron Diaz
  */
-public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
+public class FrmAppointment extends javax.swing.JFrame{
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCitas.class.getName());
-    private final clinicController controller;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmAppointment.class.getName());
     /**
      * Creates new form FrmPaciente
      */
-    public FrmCitas() {
+    public FrmAppointment() {
         initComponents();
-        controller = clinicController.getInstance(this);
-        setLocationRelativeTo(null);
-
     }
 
     /**
@@ -41,22 +32,21 @@ public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
         lblTitulo = new javax.swing.JLabel();
         pnlFormulario = new javax.swing.JPanel();
         lblIdentificacion = new javax.swing.JLabel();
-        txtIdentificacion = new javax.swing.JTextField();
+        txtCodigoCita = new javax.swing.JTextField();
         lblNombre = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtPaciente = new javax.swing.JTextField();
         lblFechaNacimiento = new javax.swing.JLabel();
-        dtcFechanacimiento = new com.toedter.calendar.JDateChooser();
-        lblTelefono = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JTextField();
-        lblCorreo = new javax.swing.JLabel();
-        txtCorreo = new javax.swing.JTextField();
-        btnVerRegistros = new javax.swing.JButton();
+        dtcFechaCita = new com.toedter.calendar.JDateChooser();
+        lblHora = new javax.swing.JLabel();
+        txtHora = new javax.swing.JTextField();
+        lblMotivo = new javax.swing.JLabel();
+        txtMotivo = new javax.swing.JTextField();
+        btnVerCitas = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btnGuardar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
+        btnGuardarCita = new javax.swing.JButton();
+        btnReprogramar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnBuscarporCodigo = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,7 +56,7 @@ public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
 
         lblTitulo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("PACIENTES");
+        lblTitulo.setText("Citas");
         lblTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnlTituloLayout = new javax.swing.GroupLayout(pnlTitulo);
@@ -83,38 +73,38 @@ public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
         pnlFormulario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Formulario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 15))); // NOI18N
 
         lblIdentificacion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblIdentificacion.setText("Identificacion:");
+        lblIdentificacion.setText("Código de cita");
         lblIdentificacion.setToolTipText("");
 
-        txtIdentificacion.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtCodigoCita.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
         lblNombre.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblNombre.setText("Nombre:");
+        lblNombre.setText("Paciente");
         lblNombre.setToolTipText("");
 
-        txtNombre.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtPaciente.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
         lblFechaNacimiento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblFechaNacimiento.setText("Fecha de nacimiento");
+        lblFechaNacimiento.setText("Fecha de cita");
         lblFechaNacimiento.setToolTipText("");
 
-        dtcFechanacimiento.setDateFormatString("dd/MM/yyyy");
-        dtcFechanacimiento.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        dtcFechaCita.setDateFormatString("dd/MM/yyyy");
+        dtcFechaCita.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
-        lblTelefono.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblTelefono.setText("Telefono");
-        lblTelefono.setToolTipText("");
+        lblHora.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblHora.setText("Hora");
+        lblHora.setToolTipText("");
 
-        txtTelefono.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtHora.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
-        lblCorreo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        lblCorreo.setText("Correo");
-        lblCorreo.setToolTipText("");
+        lblMotivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblMotivo.setText("Motivo");
+        lblMotivo.setToolTipText("");
 
-        txtCorreo.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        txtMotivo.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
-        btnVerRegistros.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnVerRegistros.setText("Ver registros");
+        btnVerCitas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnVerCitas.setText("Ver citas");
 
         javax.swing.GroupLayout pnlFormularioLayout = new javax.swing.GroupLayout(pnlFormulario);
         pnlFormulario.setLayout(pnlFormularioLayout);
@@ -124,23 +114,23 @@ public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
                 .addGap(18, 18, 18)
                 .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblIdentificacion)
-                    .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTelefono)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHora)
+                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCorreo)
+                    .addComponent(lblMotivo)
                     .addGroup(pnlFormularioLayout.createSequentialGroup()
                         .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMotivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPaciente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dtcFechanacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dtcFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblFechaNacimiento)
-                            .addComponent(btnVerRegistros, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(8, Short.MAX_VALUE))
+                            .addComponent(btnVerCitas, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlFormularioLayout.setVerticalGroup(
             pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,43 +143,38 @@ public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(dtcFechanacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCodigoCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dtcFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTelefono)
-                    .addComponent(lblCorreo))
+                    .addComponent(lblHora)
+                    .addComponent(lblMotivo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerRegistros))
+                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerCitas))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 6));
 
-        btnGuardar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
-        jPanel1.add(btnGuardar);
+        btnGuardarCita.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnGuardarCita.setText("Guardar");
+        jPanel1.add(btnGuardarCita);
 
-        btnEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnEditar.setText("Editar");
-        jPanel1.add(btnEditar);
+        btnReprogramar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnReprogramar.setText("Reprogramar");
+        jPanel1.add(btnReprogramar);
 
-        btnEliminar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnEliminar.setText("Eliminar");
-        jPanel1.add(btnEliminar);
+        btnCancelar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        jPanel1.add(btnCancelar);
 
-        btnLimpiar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnLimpiar.setText("Limpiar");
-        jPanel1.add(btnLimpiar);
-
-        btnBuscar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnBuscar.setText("Buscar");
-        jPanel1.add(btnBuscar);
+        btnBuscarporCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnBuscarporCodigo.setText("Buscar por codigo");
+        jPanel1.add(btnBuscarporCodigo);
 
         btnSalir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
@@ -216,43 +201,6 @@ public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String id = txtIdentificacion.getText();
-        String nombre = txtNombre.getText();
-        String telefono = txtTelefono.getText();
-        String correo = txtCorreo.getText();
-        
-        if (id.isEmpty() || nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty() || dtcFechanacimiento.getDate() == null){
-            showError("Debe completar todos los espacios");
-            return;
-        }
-        LocalDate fechaNacimiento = dtcFechanacimiento.getDate().toInstant()
-        .atZone(ZoneId.systemDefault()).toLocalDate();
-
-        Patient patient = new Patient(id, nombre, fechaNacimiento, telefono,
-        correo);
-        controller.addPatient(patient);
-        showMessage("Paciente agregado correctamente.");
-    }//GEN-LAST:event_btnGuardarActionPerformed
-    @Override
-    public void clear() {
-    
-    }
-
-    @Override
-    public void showData(Patient data) {
-    
-    }
-    @Override
-    public void showError(String Error) {
-        javax.swing.JOptionPane.showMessageDialog(this, Error);
-    }
-
-    @Override
-    public void showMessage(String message) {
-        javax.swing.JOptionPane.showMessageDialog(this, message);
-    }
     /**
      * @param args the command line arguments
      */
@@ -275,30 +223,29 @@ public class FrmCitas extends javax.swing.JFrame implements iViews<Patient>  {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmCitas().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new FrmAppointment().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnBuscarporCodigo;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardarCita;
+    private javax.swing.JButton btnReprogramar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnVerRegistros;
-    private com.toedter.calendar.JDateChooser dtcFechanacimiento;
+    private javax.swing.JButton btnVerCitas;
+    private com.toedter.calendar.JDateChooser dtcFechaCita;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblIdentificacion;
+    private javax.swing.JLabel lblMotivo;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlFormulario;
     private javax.swing.JPanel pnlTitulo;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtIdentificacion;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtCodigoCita;
+    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtMotivo;
+    private javax.swing.JTextField txtPaciente;
     // End of variables declaration//GEN-END:variables
 }
