@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package appointments;
-import appointments.AppointmentsList;
+import appointments.Appointment;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import patients.Patient;
 import patients.PatientsList;
@@ -33,6 +35,25 @@ public class FrmAppointment extends javax.swing.JFrame{
         txtMotivo.setText("");
         dtcFechaCita.setDate(null);
     }
+    private LocalDate obtenerFecha() {
+        Date fecha = dtcFechaCita.getDate();
+        if (fecha == null) {
+        return null;
+        }
+    return fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+}
+
+private void colocarFecha(LocalDate fecha) {
+
+    if (fecha == null) {
+        dtcFechaCita.setDate(null);
+        return;
+    }
+    Date date = Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant()
+    );
+
+    dtcFechaCita.setDate(date);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,6 +140,7 @@ public class FrmAppointment extends javax.swing.JFrame{
 
         btnVerCitas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnVerCitas.setText("Ver citas");
+        btnVerCitas.addActionListener(this::btnVerCitasActionPerformed);
 
         javax.swing.GroupLayout pnlFormularioLayout = new javax.swing.GroupLayout(pnlFormulario);
         pnlFormulario.setLayout(pnlFormularioLayout);
@@ -181,18 +203,22 @@ public class FrmAppointment extends javax.swing.JFrame{
 
         btnReprogramar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnReprogramar.setText("Reprogramar");
+        btnReprogramar.addActionListener(this::btnReprogramarActionPerformed);
         jPanel1.add(btnReprogramar);
 
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
         jPanel1.add(btnCancelar);
 
         btnBuscarporCodigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnBuscarporCodigo.setText("Buscar por codigo");
+        btnBuscarporCodigo.addActionListener(this::btnBuscarporCodigoActionPerformed);
         jPanel1.add(btnBuscarporCodigo);
 
         btnSalir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
         jPanel1.add(btnSalir);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,11 +251,13 @@ public class FrmAppointment extends javax.swing.JFrame{
         if (codigo.isEmpty() || idPaciente.isEmpty()
             || motivo.isEmpty() || txtHora.getText().isEmpty()|| dtcFechaCita.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Complete todos los campos");
+            return;
         }
         Patient patient = patientsList.get(idPaciente);
     
         if (patient == null) {
            JOptionPane.showMessageDialog(this, "Paciente no existe"); 
+           return;
         }
         LocalDate fecha = dtcFechaCita.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
         LocalTime hora;
@@ -238,20 +266,117 @@ public class FrmAppointment extends javax.swing.JFrame{
             hora = LocalTime.parse(txtHora.getText());
         }catch (Exception e){
             JOptionPane.showMessageDialog(this, "La hora debe tener formato HH:mm");
+            return;
         }
         
-        Appointment appointment = new Appointment(
-                codigo, patient, fecha, hora, motivo
-        );
+        Appointment appointment = new Appointment(codigo, patient, fecha, hora, motivo);
         
         if (appointmentsList.add(appointment)) {
            JOptionPane.showMessageDialog(this, "Cita guardada correctamente"); 
+            clear();
            
         }else{
             JOptionPane.showMessageDialog(this, "Ya existe una cita con esos datos");
+           
         }
         
     }//GEN-LAST:event_btnGuardarCitaActionPerformed
+
+    private void btnBuscarporCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarporCodigoActionPerformed
+          String codigo = txtCodigoCita.getText().trim();
+
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el código de la cita.");
+        return;
+    }
+
+        Appointment appointment = appointmentsList.get(codigo);
+
+        if (appointment == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la cita.");
+        return;
+    }
+
+    txtPaciente.setText(appointment.getPatient().getId());
+
+    colocarFecha(appointment.getDate());
+    txtHora.setText(appointment.getTime().toString());
+    txtMotivo.setText(appointment.getReason());
+    }//GEN-LAST:event_btnBuscarporCodigoActionPerformed
+
+    private void btnReprogramarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReprogramarActionPerformed
+        String codigo = txtCodigoCita.getText().trim();
+
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el código de la cita.");
+        return;
+    }
+
+    Appointment appointment = appointmentsList.get(codigo);
+
+    if (appointment == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró la cita.");
+        return;
+    }
+
+    if (!appointment.isPending()) {
+        JOptionPane.showMessageDialog(this, "La cita no está pendiente.");
+        return;
+    }
+
+    if (dtcFechaCita.getDate() == null || txtHora.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Ingrese la nueva fecha y hora.");
+        return;
+    }
+
+    LocalDate nuevaFecha = obtenerFecha();
+    LocalTime nuevaHora;
+
+    try {
+        nuevaHora = LocalTime.parse(txtHora.getText().trim());
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,"La hora debe tener el formato HH:mm.");
+        return;
+    }
+
+    appointment.reschedule(nuevaFecha, nuevaHora);
+
+    JOptionPane.showMessageDialog(this, "Cita reprogramada correctamente.");
+    }//GEN-LAST:event_btnReprogramarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        String codigo = txtCodigoCita.getText().trim();
+
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el código de la cita.");
+        return;
+        }
+
+    Appointment appointment = appointmentsList.get(codigo);
+
+    if (appointment == null) {
+        JOptionPane.showMessageDialog(this, "No se encontró la cita.");
+        return;
+    }
+
+    if (!appointment.isPending()) {
+        JOptionPane.showMessageDialog(this,"La cita ya está cancelada.");
+        return;
+    }
+
+    appointment.cancel();
+    JOptionPane.showMessageDialog(this, "Cita cancelada correctamente.");
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+       dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnVerCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCitasActionPerformed
+        FrmVerCitas ventana = new FrmVerCitas(appointmentsList);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnVerCitasActionPerformed
     /**
      * @param args the command line arguments
      */
